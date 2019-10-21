@@ -12,6 +12,15 @@
 #define all(x) x.begin(),x.end()
 typedef long long ll;
 using namespace std;
+
+struct cards{
+	int rank;
+	int val;
+	char poker[5];
+}card[5][15]={
+0,0,"",0,0,"",0,0,"",0,0,"",0,0,"",0,0,"",0,0,"",0,0,"",0,0,"",0,0,"",0,0,"",0,0,"",0,0,"",0,0,"",0,0,"",0,0,"",0,0,"",0,102,"$2",0,103,"$3",0,104,"$4",0,105,"$5",0,106,"$6",0,107,"$7",0,108,"$8",0,109,"$9",0,110,"$10",0,111,"$J",0,112,"$Q",0,113,"$K",0,114,"$A",0,0,"",0,0,"",0,202,"&2",0,203,"&3",0,204,"&4",0,205,"&5",0,206,"&6",0,207,"&7",0,208,"&8",0,209,"&9",0,210,"&10",0,211,"&J",0,212,"&Q",0,213,"&K",0,214,"&A",0,0,"",0,0,"",0,302,"*2",0,303,"*3",0,304,"*4",0,305,"*5",0,306,"*6",0,307,"*7",0,308,"*8",0,309,"*9",0,310,"*10",0,311,"*J",0,312,"*Q",0,313,"*K",0,314,"*A",0,0,"",0,0,"",0,402,"#2",0,403,"#3",0,404,"#4",0,405,"#5",0,406,"#6",0,407,"#7",0,408,"#8",0,409,"#9",0,410,"#10",0,411,"#J",0,412,"#Q",0,413,"#K",0,414,"#A"
+};
+
 struct pos{
 	int a[15];
 }_data[72080];
@@ -23,7 +32,8 @@ void pro_work(){
 	for(int iii=ii+1;iii<=13;iii++)
 	for(int iiii=iii+1;iiii<=13;iiii++)
 	for(int iiiii=iiii+1;iiiii<=13;iiiii++){
-		mm(flag, 0);
+		mm(flag, 0); 
+		//for(int j=0;j<15;j++) flag[j]=0;
 		flag[i]=flag[ii]=flag[iii]=flag[iiii]=flag[iiiii]=1;
 		for(int x=1;x<=13;x++){
 			if(!flag[x]){
@@ -328,15 +338,33 @@ ending:
 //113 213 103 102 203 304 405 406 114 214 314 310 410
 
 void data_in(){
-	for(int i=1;i<=13;i++) cin>>in_card[i];
+	
+	/*for(int i=1;i<=13;i++){ 
+		cin>>in_card[i];
+	}*/
+	int t_flag=0;
+	for(int ii=1;ii<=13;ii++){
+		string xxxx;
+		cin>>xxxx;
+		t_flag=0;
+		for(int i=1;i<=4;i++){
+		for(int j=2;j<=14;j++)
+		if(card[i][j].poker==xxxx){
+			in_card[ii]=card[i][j].val;
+			t_flag=1;
+			break;
+		}
+		if(t_flag) break; 
+		}
+	}
 	
 }
 vector<sel> vi;
 int ans[50];
 
 void cmp_all(){
-	
-	while(select.top().tolval<aans.tolval){
+	vi.clear();
+	while(!select.empty()&&select.top().tolval<aans.tolval){
 		select.pop();
 	}
 	
@@ -437,13 +465,34 @@ void data_out(){
 	}
 	*/
 	
-	
+	/*
 	for(int i=1;i<=3;i++)
-	cout<<temp.head[i]<<" "; cout<<endl;
+	cout<<temp.head[i]<<" "; cout<<"\n";
 	for(int i=1;i<=5;i++)
-	cout<<temp.mid[i]<<" "; cout<<endl;
+	cout<<temp.mid[i]<<" "; cout<<"\n";
 	for(int i=1;i<=5;i++)
-	cout<<temp.tail[i]<<" "; cout<<endl;
+	cout<<temp.tail[i]<<" "; cout<<"\n";
+	*/
+	int be_pos;
+	for(int i=1;i<=3;i++)
+	{
+		be_pos=temp.head[i]%100; if(be_pos==1) be_pos=14;
+		cout<<card[int(temp.head[i]/100)][be_pos].poker<<" "; //cout<<"\n";
+	}cout<<"\n";
+	for(int i=1;i<=5;i++){
+	//cout<<temp.mid[i]<<" ";
+	be_pos=temp.mid[i]%100; if(be_pos==1) be_pos=14;
+	cout<<card[int(temp.mid[i]/100)][be_pos].poker<<" "; //cout<<"\n";
+	}cout<<"\n";
+	for(int i=1;i<=5;i++){
+	//cout<<temp.tail[i]<<" ";
+	be_pos=temp.tail[i]%100; if(be_pos==1) be_pos=14;
+
+	cout<<card[int(temp.tail[i]/100)][be_pos].poker<<" "; 
+	}
+	cout<<"\n";
+	//cout<<"\n";
+	
 	
 	//for(int i=1;i<=3;i++) cout<<temp.kind[i]<<" ";  cout<<endl;
 }
@@ -453,14 +502,20 @@ void fun(){
 	data_in();
 	
 	//sort(in_card+1,in_card+14);
-	
+//	cout<<"x"<<endl;
 	for(int i=0;i<num;i++) judge(i);
+//	cout<<"y"<<endl;
 	
 	//cout<<select.size()<<endl;
 	
 	cmp_all();
+	//cout<<"cend"<<endl;
+	
+	
 	
 	data_out();
+	
+	
 }
 int main(){	
 	//std::ios::sync_with_stdio(false);
@@ -475,11 +530,36 @@ int main(){
 		cout<<endl;
 	}
 	*/
+//	freopen("temp.in","r",stdin);
+	//freopen("temp.out","w",stdout);
 	
+	
+	int cccnt=400;
+	//while(cccnt--)
 	fun();
 	
 	return 0;
 }
 
+
 /*113 213 103 102 203 304 405 406 114 214 314 310 410*/
 //405 406 114 103 102 203 304 214 314 310 410 113 213 
+
+/*
+
+#8 &3 *A $5 #10 *8 &5 #2 $K #4 #Q #J *10 
+&6 *4 *J *9 $K &2 $J $5 *6 #Q *3 &3 *8 
+$7 &10 *5 #3 $2 &9 #2 $10 #4 #A &4 &8 #9 
+&5 $9 $6 *2 &K #J *K &Q #10 #K *Q &J *10 
+$A &7 *A #7 &A #8 $8 $3 #6 $Q #5 *7 $4 
+&A $6 #3 *10 *9 *6 *J &K #9 $7 &10 &Q $10 
+*K $4 &8 &4 $Q $5 *8 #2 &J &5 $9 $2 *Q 
+$A #8 #6 #5 *4 &2 *7 *A #A #J #10 &3 &9 
+#K *3 $J $K #Q $8 *2 &6 #4 &7 *5 $3 #7 
+$3 *9 &3 &K $J $5 &Q *Q #K *10 #10 #9 #3 
+&A $6 $K #2 *K *8 &5 $8 &4 *3 $10 *6 #5 
+$9 *J *7 *5 $7 &10 &2 #6 #J &7 #4 &6 *4 
+$Q #7 $2 &9 #8 #A *A $4 &J &8 *2 $A #Q 
+$K $8 &A *8 #2 *10 *4 &3 $3 #J &7 $10 #K 
+
+*/
